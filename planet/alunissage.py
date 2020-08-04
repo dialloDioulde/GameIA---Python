@@ -56,17 +56,59 @@ class Spatialship():
 
 class Landing():
 
-    def __init__(self, niveau):
+    def __init__(self):
         self.step = 1
         self.hour = 0
         self.gravitation = 100
+        self.levels = {
+            'Facile': [
+                1, # Numéro du Niveau
+                5000, # Altitude de Départ
+                1200, # Vitesse Initiale
+                4000, # Carburant Initiale
+                300, # Quantité de Carburant à Consommer
+                500, # Quantité de Carburant Maximale à Consommer
+            ],
+            'Moyen': [
+                2,
+                6000,
+                2000,
+                4000,
+                400,
+                600
+            ],
+            'Difficile': [
+                3,
+                8000,
+                3000,
+                7000,
+                300,
+                700
+            ]
+        }
 
-        if niveau == 1 :
-            self.spatialship = Spatialship(5000, 1000, 5000, 200, 500)
-        elif niveau == 2 :
-            self.spatialship = Spatialship(6000, 2000, 4000, 400, 600)
-        else:
-            self.spatialship = Spatialship(8000, 3000, 7000, 300, 700)
+    def levelChoice(self):
+        print("\nListe des Niveaux de Jeu Disponibles : ")
+        for level in self.levels:
+            print("\t{} - {}".format(self.levels[level][0], level))
+
+        levelGame = 0
+        while (levelGame < 1 or levelGame > len(self.levels)) :
+            try:
+                levelGame = int(input("Indiquez le niveau du Jeu 1/{} : ".format(len(self.levels))))
+            except ValueError :
+                levelGame = 1
+
+        for level in self.levels:
+            if self.levels[level][0] == levelGame :
+                altitude = self.levels[level][1]
+                speed = self.levels[level][2]
+                fuel = self.levels[level][3]
+                push = self.levels[level][4]
+                pushMax = self.levels[level][5]
+                self.spatialship = Spatialship(altitude, speed, fuel, push, pushMax)
+                break
+
 
         print("\nL\'altitude du Viasseau en orbite est {}".format(self.spatialship.getAltitude()))
 
@@ -137,14 +179,10 @@ if __name__ == "__main__":
     print("Alunissage")
     print("*" *20, "\n")
 
-    niveau = 0
-    while (niveau < 1 or niveau > 3) :
-        try:
-            niveau = int(input("Indiquez le niveau du Jeu (1 ou 2 ou 3) : "))
-        except ValueError:
-            niveau = 1
 
-    game = Landing(niveau)
+    game = Landing()
+    game.levelChoice()
+
     message = "C'est parti"
     while game.inFlit():
         game.showSpatialship(message)
