@@ -4,12 +4,12 @@
 
 class Spatialship():
 
-    def __init__(self):
-        self.altitude = 5000
-        self.speed = 1000
-        self.fuel = 1000
-        self.push = 0
-        self.pushMax = 500
+    def __init__(self, altitude, speed, fuel, push, pushMax):
+        self.altitude = altitude
+        self.speed = speed
+        self.fuel = fuel
+        self.push = push
+        self.pushMax = pushMax
 
     def getAltitude(self):
         return self.altitude
@@ -38,9 +38,12 @@ class Spatialship():
         self.fuel = fuel
 
     def burnFuel(self, fuel):
+        if fuel > self.fuel :
+            fuel = self.fuel
         self.fuel -= fuel
-        if self.fuel < 0 :
-            self.fuel = 0
+
+        push = (self.push // 2 + fuel) // 2
+        return push
 
     def setPush(self, push):
         self.push = push
@@ -57,7 +60,7 @@ class Landing():
         self.step = 1
         self.hour = 0
         self.gravitation = 100
-        self.spatialship = Spatialship()
+        self.spatialship = Spatialship(5000, 1000, 5000, 200, 500)
         print("L\'altitude du Viasseau en orbite est {}".format(self.spatialship.getAltitude()))
 
     def inFlit(self):
@@ -81,14 +84,14 @@ class Landing():
 
 
     def piloting(self):
-        push = - 1
-        while (push < 0 or push > self.spatialship.getPushMax()):
+        fuel = - 1
+        while (fuel < 0 or fuel > self.spatialship.getPushMax()):
             try:
-                push = int(input("\nQuelle Quantité de Carburant doit être Consommée (max = {:<3}) ? ".format(self.spatialship.getPushMax())))
+                fuel = int(input("\nQuelle Quantité de Carburant doit être Consommée (max = {:<3}) ? ".format(self.spatialship.getPushMax())))
             except ValueError :
-                push = 0
+                fuel = 0
 
-        self.spatialship.burnFuel(push)
+        push = self.spatialship.burnFuel(fuel)
         self.spatialship.setPush(push)
 
     def simulation(self):
