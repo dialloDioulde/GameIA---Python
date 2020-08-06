@@ -5,7 +5,7 @@
 """
     Morpion
     *************************************************************************
-
+    Implémentation du Jeu Morpion avec un joueur contre une Intelligence Artificielle.
     *************************************************************************
 
 """
