@@ -1,15 +1,24 @@
 #usr/bin/python
 # -*- coding: utf-8 -*-
 
+"""
+    Vaisseau Spatial
+    *************************************************************************
+    Dans ce jeu je simule un vaisseau spatial en Orbite pour mettre en pratique
+    les notions de Classe, d'Objet et de fonction en Python.
+    *************************************************************************
 
+"""
+
+# Vaisseau Spatial
 class Spatialship():
 
     def __init__(self, altitude, speed, fuel, push, pushMax):
-        self.altitude = altitude
-        self.speed = speed
-        self.fuel = fuel
-        self.push = push
-        self.pushMax = pushMax
+        self.altitude = altitude    # Altitude
+        self.speed = speed          # Vitesse
+        self.fuel = fuel            # Carburant
+        self.push = push            # Poussée ou Carburant à Consommer
+        self.pushMax = pushMax      # Poussée ou Carburant Maximale à Consommer
 
     def getAltitude(self):
         return self.altitude
@@ -53,13 +62,15 @@ class Spatialship():
 
 
 
-
+# Alunissage
 class Landing():
 
     def __init__(self):
-        self.step = 1
-        self.hour = 0
-        self.gravitation = 100
+        self.step = 1       # Étape
+        self.hour = 0       # Heure
+        self.gravitation = 100  # Gravitation
+
+        # Niveaux du Jeu
         self.levels = {
             'Facile': [
                 1, # Numéro du Niveau
@@ -87,6 +98,7 @@ class Landing():
             ]
         }
 
+    # Choix des Niveaux de jeu
     def levelChoice(self):
         print("\nListe des Niveaux de Jeu Disponibles : ")
         for level in self.levels:
@@ -118,6 +130,7 @@ class Landing():
         else:
             return False
 
+    # Affichage à l'Ecran de chaque état du jeu
     def showSpatialship(self, message):
         print("\t+-------------------------------------+")
         print("\t|************** Étapte {:>2} ************|".format(self.step))
@@ -132,6 +145,7 @@ class Landing():
         print("\t+-------------------------------------+")
 
 
+    # Pilotage du Vaisseau Spatiale par le joueur
     def piloting(self):
         fuel = - 1
         while (fuel < 0 or fuel > self.spatialship.getPushMax()):
@@ -143,6 +157,7 @@ class Landing():
         push = self.spatialship.burnFuel(fuel)
         self.spatialship.setPush(push)
 
+    # Simulation de Trajectoire du Vaisseau Spatiale par le joueur
     def simulation(self):
         self.step += 1
 
@@ -163,6 +178,7 @@ class Landing():
         return msg
 
 
+    # Notification du Résultat au joueur à la fin du jeu
     def result(self):
         speed = self.spatialship.getSpeed()
         if speed > 100:
@@ -174,7 +190,7 @@ class Landing():
         print("\n Fin du Jeu !")
 
 
-
+# Début du Programme
 if __name__ == "__main__":
     print("Alunissage")
     print("*" *20, "\n")
