@@ -3,7 +3,7 @@ Ce Repository contient des Jeux que j'ai réalisé en Python.
 
 Le Premier jeu : Square Magic 
 
-Le Deuxième jeu : Vaisseau Spatil 
+Le Deuxième jeu : Vaisseau Spatial 
 
 Le Troisième jeu : Morpion   
 
